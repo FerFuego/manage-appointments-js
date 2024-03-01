@@ -13,7 +13,7 @@
     <div class="container mt-5 p-5">
         <div id="contenido" class="row">
             <div class="col-md-6 agregar-cita">
-                <form id="nueva-cita">
+                <form id="form-appointment">
                     <legend class="mb-4">Datos del Paciente</legend>
                     <div class="form-group row">
                         <label class="col-sm-4 col-lg-4 col-form-label">Nombre Mascota:</label>
@@ -54,9 +54,16 @@
                         </div>
                     </div>
                     <div class="form-group">
-                            <button type="submit" class="btn btn-success w-100 d-block">Crear Cita</button>
+                        <button type="submit" id="submit" class="btn btn-success w-100 d-flex justify-content-center align-items-center" disabled="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"></path>
+                        </svg> Crear Cita</button>
                     </div>
                 </form>
+                <!-- Spinner -->
+                <div class="spinner hidden" id="spinner">
+                    <div class="double-bounce1"></div>
+                    <div class="double-bounce2"></div>
+                </div>
             </div>
             <div class="col-md-6">
                 <h2 id="administra" class="mb-4">Administra tus Citas</h2>

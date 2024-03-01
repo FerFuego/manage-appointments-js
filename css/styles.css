@@ -46,6 +46,9 @@ html {
   textarea {
       height: 200px!important;
   }
+  .btn-success {
+    gap: 10px
+  }
   
   svg {
     width: 21px;
