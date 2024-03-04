@@ -2,7 +2,7 @@
 class Appointments {
 
     constructor() {
-        this.appointments = [];
+        this.appointments = JSON.parse(localStorage.getItem('citas')) || [];
     }
 
     setAppointments(object) {
@@ -10,8 +10,27 @@ class Appointments {
         this.appointments = [...this.appointments, {...object, id: Date.now()}];
         // Set localStorage
         localStorage.setItem('citas', JSON.stringify(this.appointments));
+        // Create html
+        ui.createHTML(this.appointments);
         // Show success message
         ui.showMessage('Cita creada correctamente', 'success');
+    }
+
+    deleteAppointments(id) {
+        // Filter appointments
+        this.appointments = this.appointments.filter(appointment => appointment.id !== Number(id));
+        // Set localStorage
+        localStorage.setItem('citas', JSON.stringify(this.appointments));
+        // Create html
+        this.createHTML();
+        // Show success message
+        ui.showMessage('Cita eliminada correctamente', 'success');
+    }
+
+    syncronize() {
+        if (this.appointments.length !== 0) {
+            ui.createHTML(this.appointments);
+        }
     }
 }
 // UI Class
@@ -19,6 +38,26 @@ class UI {
 
     init () {
         this.form = document.querySelector('#form-appointment');
+    }
+
+    createHTML(appointments) {
+        const html = appointments.map(appointment => {
+            return `
+                <li class="list-group-item">
+                    <p class="font-weight-bold">Mascota: <span class="font-weight-normal">${appointment.name}</span></p>
+                    <p class="font-weight-bold">Propietario: <span class="font-weight-normal">${appointment.owner}</span></p>
+                    <p class="font-weight-bold">Fecha: <span class="font-weight-normal">${appointment.date}</span></p>
+                    <p class="font-weight-bold">Hora: <span class="font-weight-normal">${appointment.time}</span></p>
+                    <p class="font-weight-bold">Sintomas: <span class="font-weight-normal">${appointment.symptoms}</span></p>
+                    <div class="row justify-content-center">
+                        <button class="btn btn-danger btn-delete btn-sm mx-1" data-id="${appointment.id}">Eliminar</button>
+                        <button class="btn btn-success btn-edit btn-sm mx-1" data-id="${appointment.id}">Editar</button>
+                    </div>
+                </li>
+            `;
+        });
+        const list = document.querySelector('#citas');
+        list.innerHTML = html.join('');
     }
 
     showMessage (message, type) {
@@ -207,6 +246,7 @@ class Validate_Form {
 let ui = new UI();
 ui.init();
 const appointment = new Appointments(); // paso copia del objeto
+appointment.syncronize();
 
 // Events
 document.addEventListener('DOMContentLoaded', () => {
