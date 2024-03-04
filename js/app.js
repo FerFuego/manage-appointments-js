@@ -1,7 +1,23 @@
+// Appointments Class
+class Appointments {
+
+    constructor() {
+        this.appointments = [];
+    }
+
+    setAppointments(object) {
+        // Add Id to each appointment
+        this.appointments = [...this.appointments, {...object, id: Date.now()}];
+        // Set localStorage
+        localStorage.setItem('citas', JSON.stringify(this.appointments));
+        // Show success message
+        ui.showMessage('Cita creada correctamente', 'success');
+    }
+}
 // UI Class
 class UI {
 
-    constructor () {
+    init () {
         this.form = document.querySelector('#form-appointment');
     }
 
@@ -16,7 +32,7 @@ class UI {
         // Add text
         div.appendChild(document.createTextNode(message));
         // Insert into DOM
-        document.querySelector('.primario').insertBefore(div, this.form);
+        document.querySelector('.agregar-cita').insertBefore(div, this.form);
         // Remove alert after 3 seconds
         setTimeout(function() {
             document.querySelector('.alert').remove();
@@ -172,22 +188,25 @@ class Validate_Form {
         e.preventDefault();
         // Show spinner
         this.spinner.classList.remove('hidden');
+        // Create object
+        const obj = {};
+        this.inputs.forEach(input => obj[input.name] = input.value);
+        // Send object
+        appointment.setAppointments({...obj});
         // Hide spinner after 3 seconds
         setTimeout(() => {
             this.spinner.classList.add('hidden');
             // reset form
             this.resetForm();
-            // Show success message
-            this.showAlert('Cita creada correctamente', this.form, 'success');
         }, 3000);
-
-        setTimeout(() => this.resetForm(), 5000);
     }
 
 }
 
 // Variables Globales
 let ui = new UI();
+ui.init();
+const appointment = new Appointments(); // paso copia del objeto
 
 // Events
 document.addEventListener('DOMContentLoaded', () => {
