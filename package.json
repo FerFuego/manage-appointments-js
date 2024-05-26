@@ -1,0 +1,14 @@
+{
+  "name": "manage-appointments",
+  "version": "1.0.0",
+  "description": "Manage Appointments",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fer Catalano",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^13.10.0"
+  }
+}

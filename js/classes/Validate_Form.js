@@ -138,7 +138,7 @@ class Validate_Form {
         // Check if there are empty inputs
         const emptyInputs = [...inputs].filter(input => {
             if (input.type !== 'hidden') {
-                input.value.trim() === ''
+                return input.value.trim() == ''
             }
         });
         if(emptyInputs.length > 0) return false;
